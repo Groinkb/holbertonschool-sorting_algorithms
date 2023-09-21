@@ -1,27 +1,25 @@
 #include "sort.h"
-
 /**
- * insertion_sort - function that sorts elements in an array using
- * insertion sort technique
+ * bubble_sort - function that sorts elements in an array using
+ * bubble sort technique
  * @array: array
  * @size: size of the array
  */
-void insertion_sort(int *array, size_t size)
+void bubble_sort(int *array, size_t size)
 {
-	size_t i, j;
-	int key;
+	int i, j, tmp;
 
-	for (i = 1; i < size; i++)
+	for (i = 0; i < (int)size - 1; i++)
 	{
-		key = array[i];
-		j = i - 1;
-
-		while (j >= 0 && array[j] > key)
+		for (j = 0; j < (int)size - i - 1; j++)
 		{
-			array[j + 1] = array[j];
-			j = j - 1;
+			if (array[j] > array[j + 1])
+			{
+				tmp = array[j + 1];
+				array[j + 1] = array[j];
+				array[j] = tmp;
+				print_array(array, size);
+			}
 		}
-		array[j + 1] = key;
-		print_array(array, size);
 	}
 }
