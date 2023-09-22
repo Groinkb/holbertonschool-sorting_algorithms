@@ -1,72 +1,70 @@
 #include "sort.h"
 
 /**
- * hoare_partition - function that implements Hoare partition scheme
- * @array: array
- * @low: first index
- * @high: last index
- * @size: size of array
- * Return: pivot index
+ * lomuto_partition - Lomuto partition scheme
+ * @array: Array to be partitioned
+ * @low: Index of the low element
+ * @high: Index of the high element
+ * @size: Size of the array
+ * Return: Index of the pivot element
  */
-int hoare_partition(int *array, int low, int high, size_t size)
+int lomuto_partition(int *array, int low, int high, size_t size)
 {
-	int pivot, tmp;
+	int pivot = array[high];
 	int i = low - 1;
-	int j = high + 1;
 
-	pivot = array[low];
-
-	while (1)
+	for (int j = low; j <= high - 1; j++)
 	{
-		do
+		if (array[j] < pivot)
 		{
 			i++;
-		} while (array[i] < pivot);
-
-		do
-		{
-			j--;
-		} while (array[j] > pivot);
-
-		if (i >= j)
-		{
-			return j;
+			if (i != j)
+			{
+				int temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+				print_array(array, size);
+			}
 		}
-
-		tmp = array[i];
-		array[i] = array[j];
-		array[j] = tmp;
+	}
+	if (array[high] < array[i + 1])
+	{
+		int temp = array[i + 1];
+		array[i + 1] = array[high];
+		array[high] = temp;
 		print_array(array, size);
 	}
+	return (i + 1);
 }
 
 /**
- * hoare_quick_sort - Hoare partition scheme implemented
- * @array: array
- * @low: first index
- * @high: last index
- * @size: size of array
+ * lomuto_quick_sort - Lomuto quick sort implementation
+ * @array: Array to be sorted
+ * @low: Index of the low element
+ * @high: Index of the high element
+ * @size: Size of the array
  */
-void hoare_quick_sort(int *array, int low, int high, size_t size)
+void lomuto_quick_sort(int *array, int low, int high, size_t size)
 {
 	if (low < high)
 	{
-		int pivot = hoare_partition(array, low, high, size);
+		int part = lomuto_partition(array, low, high, size);
 
-		hoare_quick_sort(array, low, pivot, size);
-		hoare_quick_sort(array, pivot + 1, high, size);
+		lomuto_quick_sort(array, low, part - 1, size);
+		lomuto_quick_sort(array, part + 1, high, size);
 	}
 }
 
 /**
- * quick_sort_hoare - sorts an array of integers in ascending order
- * using the quick sort algorithm (Hoare partition scheme)
- * @array: array
- * @size: size of array
+ * quick_sort - Sorts an array of integers in ascending order
+ * using the Quick Sort algorithm
+ * @array: Array to be sorted
+ * @size: Size of the array
  */
-void quick_sort_hoare(int *array, size_t size)
+void quick_sort(int *array, size_t size)
 {
 	if (array == NULL || size < 2)
 		return;
-	hoare_quick_sort(array, 0, size - 1, size);
+
+	lomuto_quick_sort(array, 0, size - 1, size);
 }
