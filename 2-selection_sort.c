@@ -1,7 +1,7 @@
 #include "sort.h"
 /**
  * selection_sort - Tri par sélection
- * @array: tableau à trier
+ * @array: tableau à trier pour la function
  * @size: taille du tableau
  */
 void selection_sort(int *array, size_t size)
