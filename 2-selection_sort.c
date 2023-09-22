@@ -1,27 +1,33 @@
 #include "sort.h"
-
 /**
- * insertion_sort - function that sorts elements in an array using
- * insertion sort technique
- * @array: array
- * @size: size of the array
+ * selection_sort - Tri par sélection
+ * @array: tableau à trier
+ * @size: taille du tableau
  */
-void insertion_sort(int *array, size_t size)
+void selection_sort(int *array, size_t size)
 {
-	size_t i, j;
-	int key;
+	if (array == NULL || size < 2)
+		return;
 
-	for (i = 1; i < size; i++)
+	size_t i, j, min_index;
+	int temp;
+
+	for (i = 0; i < size - 1; i++)
 	{
-		key = array[i];
-		j = i - 1;
+		min_index = i;
 
-		while (j >= 0 && array[j] > key)
+		for (j = i + 1; j < size; j++)
 		{
-			array[j + 1] = array[j];
-			j = j - 1;
+			if (array[j] < array[min_index])
+				min_index = j;
 		}
-		array[j + 1] = key;
-		print_array(array, size);
+
+		if (min_index != i)
+		{
+			temp = array[i];
+			array[i] = array[min_index];
+			array[min_index] = temp;
+			print_array(array, size);
+		}
 	}
 }
